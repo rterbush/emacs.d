@@ -8,7 +8,22 @@
 (when (version<= emacs-version "24")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
-(require 'cask "~/.cask/cask.el")
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'init-benchmarking) ;; Measure startup time
+
+(defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
+(defconst *is-a-mac* (eq system-type 'darwin))
+(defconst *is-a-penguin* (eq system-type 'gnu/linux))
+
+;;----------------------------------------------------------------------------
+;; Package Management
+;;----------------------------------------------------------------------------
+(when *is-a-mac*
+  (require 'cask "/usr/local/Cellar/cask/0.7.0/cask.el"))
+
+(when *is-a-penguin*
+  (require 'cask "~/.cask/cask.el"))
+
 (cask-initialize)
 (require 'pallet)
 (require 'package)
