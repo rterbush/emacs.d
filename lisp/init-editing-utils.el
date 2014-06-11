@@ -56,7 +56,7 @@
 (require-package 'whitespace-cleanup-mode)
 (global-whitespace-cleanup-mode t)
 
-(global-set-key [remap just-one-space] 'cycle-spacing)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 
 ;;; Newline behaviour
