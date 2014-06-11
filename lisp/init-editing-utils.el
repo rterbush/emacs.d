@@ -63,6 +63,8 @@
 (require-package 'whitespace-cleanup-mode)
 (global-whitespace-cleanup-mode t)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 
 ;;; Newline behaviour
 

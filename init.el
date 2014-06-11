@@ -94,6 +94,7 @@
 (require 'init-ruby-mode)
 (require 'init-rails)
 (require 'init-sql)
+(require 'init-web-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
