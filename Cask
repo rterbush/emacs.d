@@ -1,4 +1,3 @@
-(source "melpa-stable" "http://melpa-stable.milkbox.net/packages/")
 (source gnu)
 (source marmalade)
 (source melpa)
@@ -127,6 +126,7 @@
 (depends-on "gruber-darker-theme")
 (depends-on "guide-key")
 (depends-on "guide-key")
+(depends-on "handlebars-mode")
 (depends-on "haskell-mode")
 (depends-on "haskell-mode")
 (depends-on "haskell-mode")
