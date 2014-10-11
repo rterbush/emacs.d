@@ -94,7 +94,7 @@
 (require 'init-rails)
 (require 'init-sql)
 (require 'init-web-mode)
-(require 'init-handlebars-mode)
+;;(require 'init-handlebars-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
