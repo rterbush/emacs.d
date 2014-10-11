@@ -17,7 +17,7 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 (when *is-a-mac*
-  (require 'cask "/usr/local/Cellar/cask/0.7.0/cask.el"))
+  (require 'cask "/usr/local/Cellar/cask/0.7.2/cask.el"))
 
 (when *is-a-penguin*
   (require 'cask "~/.cask/cask.el"))
@@ -67,6 +67,7 @@
 (require 'init-uniquify)
 (require 'init-ibuffer)
 (require 'init-flycheck)
+;;(require 'init-ledger)
 
 (require 'init-recentf)
 (require 'init-ido)
@@ -103,7 +104,7 @@
 (require 'init-rails)
 (require 'init-sql)
 (require 'init-web-mode)
-;;(require 'init-handlebars-mode)
+(require 'init-handlebars-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
@@ -120,7 +121,6 @@
 (require 'init-misc)
 
 (require 'init-dash)
-(require 'init-ledger)
 ;; Extra packages which don't require any configuration
 
 (require-package 'gnuplot)
