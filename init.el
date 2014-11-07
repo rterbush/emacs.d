@@ -17,7 +17,7 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 (when *is-a-mac*
-  (require 'cask "/usr/local/Cellar/cask/0.7.2/cask.el"))
+  (require 'cask "~/.emacs.d/.cask/24.4.1/elpa/cask-20141026.1127/cask.el"))
 
 (when *is-a-penguin*
   (require 'cask "~/.cask/cask.el"))
@@ -113,6 +113,7 @@
 (when (>= emacs-major-version 24)
   (require 'init-clojure-cider))
 (require 'init-common-lisp)
+(require 'init-scala)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
@@ -165,6 +166,7 @@
             (message "init completed in %.2fms"
                      (sanityinc/time-subtract-millis after-init-time before-init-time))))
 
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (provide 'init)
 
