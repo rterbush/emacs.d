@@ -19,6 +19,7 @@
 (depends-on "async")
 (depends-on "auto-compile")
 (depends-on "auto-complete")
+(depends-on "bind-key")
 (depends-on "browse-kill-ring")
 (depends-on "bug-reference-github")
 (depends-on "cask")
