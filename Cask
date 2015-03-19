@@ -183,6 +183,7 @@
 (depends-on "tidy")
 (depends-on "undo-tree")
 (depends-on "unfill")
+(depends-on "use-package")
 (depends-on "vc-darcs")
 (depends-on "web-mode")
 (depends-on "wgrep")
