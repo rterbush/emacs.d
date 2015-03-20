@@ -1,6 +1,7 @@
+;;; package --- Summary:
+;;; Commentary:
 ;; Basic clojure support, even in Emacs 23
 ;; See also init-clojure-cider.el
-
 (require-package 'clojure-mode)
 (require-package 'cljsbuild-mode)
 (require-package 'elein)
@@ -8,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Slime with Clojure
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;; Code:
 (defun slime-clojure-repl-setup ()
   "Some REPL setup additional to that in durendal."
   (when (string-equal (slime-lisp-implementation-name) "clojure")
@@ -34,11 +35,10 @@
   (add-hook 'clojure-mode-hook 'sanityinc/lisp-setup)
   (add-hook 'clojure-mode-hook 'subword-mode))
 
-
-
 ;; Use clojure-mode for clojurescript, since clojurescript-mode
 ;; pulls in Slime
 (add-auto-mode 'clojure-mode "\\.cljs\\'")
 
 
 (provide 'init-clojure)
+;;; init-clojure.el ends here

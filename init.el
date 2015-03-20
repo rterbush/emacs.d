@@ -84,7 +84,7 @@
 (require 'init-recentf)
 (require 'init-ido)
 (require 'init-hippie-expand)
-(require 'init-auto-complete)
+;;(require 'init-auto-complete)
 (require 'init-windows)
 (require 'init-sessions)
 (require 'init-fonts)
@@ -120,7 +120,7 @@
 
 (require 'init-paredit)
 (require 'init-lisp)
-(require 'init-slime)
+(require 'init-company)
 (require 'init-clojure)
 (when (>= emacs-major-version 24)
   (require 'init-clojure-cider))

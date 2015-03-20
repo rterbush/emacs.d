@@ -160,12 +160,6 @@
   (redshank-mode)
   (add-hook 'after-save-hook #'check-parens nil t))
 
-(defun sanityinc/emacs-lisp-setup ()
-  "Enable features useful when working with elisp."
-  (elisp-slime-nav-mode t)
-  (set-up-hippie-expand-for-elisp)
-  (ac-emacs-lisp-mode-setup))
-
 (defconst sanityinc/elispy-modes
   '(emacs-lisp-mode ielm-mode)
   "Major modes relating to elisp.")
@@ -180,8 +174,8 @@
 (dolist (hook (mapcar #'derived-mode-hook-name sanityinc/lispy-modes))
   (add-hook hook 'sanityinc/lisp-setup))
 
-(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
-  (add-hook hook 'sanityinc/emacs-lisp-setup))
+;;(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
+;;  (add-hook hook 'sanityinc/emacs-lisp-setup))
 
 (if (boundp 'eval-expression-minibuffer-setup-hook)
     (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
