@@ -163,6 +163,7 @@
 (depends-on "skewer-less")
 (depends-on "skewer-mode")
 (depends-on "slime")
+(depends-on "smartparens")
 (depends-on "smarty-mode")
 (depends-on "smex")
 (depends-on "smooth-scrolling")
