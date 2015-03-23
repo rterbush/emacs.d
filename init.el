@@ -125,7 +125,7 @@
 (when (>= emacs-major-version 24)
   (require 'init-clojure-cider))
 (require 'init-common-lisp)
-(require 'init-scala)
+;;(require 'init-scala)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
