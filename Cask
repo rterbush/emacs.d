@@ -35,6 +35,7 @@
 (depends-on "csv-mode")
 (depends-on "csv-nav")
 (depends-on "ctable")
+(depends-on "cyberpunk-theme")
 (depends-on "darcsum")
 (depends-on "dash")
 (depends-on "dash-at-point")
