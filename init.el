@@ -1,11 +1,9 @@
-
+;;; package --- Summary:
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
-
-(let ((minver "23.3"))
-  (when (version<= emacs-version "23.1")
-    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
-(when (version<= emacs-version "24")
+;;; Commentary:
+;;; Code:
+(when (version< emacs-version "24")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -26,15 +24,6 @@
 (pallet-mode t)
 
 (require 'package)
-(add-to-list 'package-archives
-	'("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-	'("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-	'("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-	'("gnu" . "http://elpa.gnu.org/packages/"))
-(package-initialize)
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-benchmarking) ;; Measure startup time
@@ -79,6 +68,7 @@
 (require 'init-uniquify)
 (require 'init-ibuffer)
 (require 'init-flycheck)
+(require 'init-linum)
 ;;(require 'init-ledger)
 
 (require 'init-recentf)
@@ -180,6 +170,7 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (provide 'init)
+;;; init.el ends here
 
 ;; Local Variables:
 ;; coding: utf-8

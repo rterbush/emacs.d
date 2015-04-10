@@ -157,6 +157,9 @@
   (when (fboundp 'aggressive-indent-mode)
     (aggressive-indent-mode))
   (turn-on-eldoc-mode)
+  (eldoc-add-command
+  'paredit-backward-delete
+  'paredit-close-round)
   (redshank-mode)
   (add-hook 'after-save-hook #'check-parens nil t))
 

@@ -1,5 +1,7 @@
+;;; package --- Summary:
+;;; Commentary:
 ;;; Find and load the correct package.el
-
+;;; Code:
 ;; When switching between Emacs 23 and 24, we always use the bundled package.el in Emacs 24
 (let ((package-el-site-lisp-dir
        (expand-file-name "site-lisp/package" user-emacs-directory)))

@@ -12,6 +12,7 @@
 (setq nrepl-popup-stacktraces nil)
 (setq nrepl-log-messages t)
 (setq nrepl-hide-special-buffers t)
+(setq cider-repl-display-in-current-window t)
 ;;(setq cider-prefer-local-resources t)
 (setq cider-show-error-buffer nil)
 (setq cider-stacktrace-default-filters '(tooling dup))
@@ -27,7 +28,7 @@
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'cider-mode-hook #'cider-turn-on-eldoc-mode)
   (add-hook 'cider-repl-mode-hook
             (lambda () (setq show-trailing-whitespace nil))))
 
