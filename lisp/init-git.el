@@ -1,3 +1,5 @@
+;;; package --- Summary:
+;;; Commentary:
 ;; TODO: link commits from vc-log to magit-show-commit
 ;; TODO: smerge-mode
 (require-package 'magit)
@@ -8,6 +10,8 @@
 (require-package 'gitconfig-mode)
 (require-package 'git-messenger) ;; Though see also vc-annotate's "n" & "p" bindings
 (require-package 'git-timemachine)
+
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 (setq-default
  magit-save-some-buffers nil
@@ -90,3 +94,4 @@
 
 
 (provide 'init-git)
+;;; init-git.el ends here
