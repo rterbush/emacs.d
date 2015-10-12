@@ -17,7 +17,7 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 
-(require 'cask "~/.cask/cask.el")
+(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20150924.208/cask.el")
 (cask-initialize)
 
 (require 'pallet)
