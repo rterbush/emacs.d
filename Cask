@@ -190,6 +190,7 @@
 (depends-on "scala-mode2")
 (depends-on "scratch")
 (depends-on "scss-mode")
+(depends-on "seq")
 (depends-on "session")
 (depends-on "seti-theme")
 (depends-on "shut-up")
