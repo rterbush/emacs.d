@@ -17,16 +17,13 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 
-(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20150924.208/cask.el")
+(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20151009.202/cask.el")
 (cask-initialize)
 
 (require 'pallet)
 (pallet-mode t)
 
 (require 'package)
-
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(require 'init-benchmarking) ;; Measure startup time
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -101,6 +98,7 @@
 (require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
+(require 'init-powershell-mode)
 (require 'init-haskell)
 (require 'init-ruby-mode)
 (require 'init-rails)
