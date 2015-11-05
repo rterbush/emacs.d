@@ -11,7 +11,7 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs$\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.shtml?\\'" . web-mode))
 (setq web-mode-enable-current-element-highlight t)
 (setq web-mode-enable-auto-pairing t)
 ;;(set-face-attribute 'web-mode-html-tag-face nil)
