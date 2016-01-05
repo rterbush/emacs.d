@@ -14,6 +14,12 @@
 (add-to-list 'auto-mode-alist '("\\.shtml?\\'" . web-mode))
 (setq web-mode-enable-current-element-highlight t)
 (setq web-mode-enable-auto-pairing t)
-;;(set-face-attribute 'web-mode-html-tag-face nil)
+;; (set-face-attribute 'web-mode-html-tag-face nil :foreground "Orange")
+;; (set-face-attribute 'web-mode-html-attr-name-face nil :foreground "Purple")
+;; (set-face-attribute 'web-mode-doctype-face nil :foreground "Blue")
+
+;; (setq web-mode-engines-alist
+;;       '(("php" . "\\.phtml\\'")
+;;         ("ruby" . "\\.erb\\'")))
 
 (provide 'init-web-mode)

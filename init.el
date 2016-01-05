@@ -3,6 +3,13 @@
 ;;; a number of other files.
 ;;; Commentary:
 ;;; Code:
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (when (version< emacs-version "24")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
@@ -17,7 +24,7 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 
-(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20151009.202/cask.el")
+(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20151123.528/cask.el")
 (cask-initialize)
 
 (require 'pallet)
@@ -98,7 +105,8 @@
 (require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
-(require 'init-powershell-mode)
+(require 'init-ein)
+;;(require 'init-powershell-mode)
 (require 'init-haskell)
 (require 'init-ruby-mode)
 (require 'init-rails)
@@ -119,8 +127,10 @@
   (require 'init-spelling))
 
 (require 'init-misc)
-
 (require 'init-dash)
+
+(elpy-enable)
+
 ;; Extra packages which don't require any configuration
 
 (require-package 'gnuplot)
