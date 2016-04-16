@@ -1,5 +1,8 @@
+;;; package --- Summary:
+;;; Commentary:
 ;; Support for the http://kapeli.com/dash documentation browser
 
+;;; Code:
 (defun sanityinc/dash-installed-p ()
   "Return t if Dash is installed on this machine, or nil otherwise."
   (let ((lsregister "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"))
@@ -18,3 +21,4 @@
   (global-set-key (kbd "C-c d") 'dash-at-point))
 
 (provide 'init-dash)
+;;; init-dash.el ends here

@@ -107,6 +107,7 @@
 (require 'init-python-mode)
 (require 'init-ein)
 ;;(require 'init-powershell-mode)
+(require 'init-projectile)
 (require 'init-haskell)
 (require 'init-ruby-mode)
 (require 'init-rails)

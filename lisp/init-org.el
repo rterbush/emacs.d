@@ -1,3 +1,5 @@
+;;; package --- Summary:
+;;; Commentary:
 (when (< emacs-major-version 24)
   (require-package 'org))
 (require-package 'org-fstree)
@@ -6,6 +8,7 @@
   (autoload 'org-mac-grab-link "org-mac-link" nil t)
   (require-package 'org-mac-iCal))
 
+;;; Code:
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 
@@ -128,3 +131,4 @@
 
 
 (provide 'init-org)
+;;; init-org.el ends here
