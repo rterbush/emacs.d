@@ -38,3 +38,5 @@ site-lisp/package/
 /eshell
 /.cask/
 /.sx/
+/lisp/.Rhistory
+/projectile-bookmarks.eld
