@@ -19,6 +19,7 @@
     (add-hook 'cider-repl-mode-hook 'subword-mode)
     (add-hook 'cider-repl-mode-hook 'paredit-mode)
     (define-key cider-mode-map (kbd "C-c C-d") 'ac-cider-popup-doc)
+    (global-set-key (kbd "C-c g") 'cider-grimoire)
 
     ;; nrepl isn't based on comint
     (add-hook 'cider-repl-mode-hook
@@ -27,7 +28,8 @@
   (require-package 'flycheck-clojure)
   (after-load 'clojure-mode
     (after-load 'flycheck
-      (flycheck-clojure-setup))))
+      (flycheck-clojure-setup)
+      '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
 
 (provide 'init-clojure-cider)
 ;;; init-clojure-cider.el ends here

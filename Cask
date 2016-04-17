@@ -97,6 +97,7 @@
 (depends-on "flycheck-hdevtools")
 (depends-on "flycheck-ledger")
 (depends-on "flycheck-package")
+(depends-on "flycheck-pos-tip")
 (depends-on "flymake-yaml")
 (depends-on "fullframe")
 (depends-on "gh")
