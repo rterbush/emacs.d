@@ -41,5 +41,27 @@
 (global-set-key (kbd "<left-margin> <mouse-1>") 'mu-select-linum)
 (global-set-key (kbd "<left-margin> <drag-mouse-1>") 'mu-select-linum)
 
+(if (fboundp 'prog-mode)
+    (dolist (hook '(lisp-mode-hook
+                    emacs-lisp-mode-hook
+                    scheme-mode-hook
+                    clojure-mode-hook
+                    ruby-mode-hook
+                    yaml-mode
+                    python-mode-hook
+                    shell-mode-hook
+                    php-mode-hook
+                    css-mode-hook
+                    haskell-mode-hook
+                    caml-mode-hook
+                    nxml-mode-hook
+                    crontab-mode-hook
+                    perl-mode-hook
+                    tcl-mode-hook
+                    javascript-mode-hook
+                    scala-mode-hook
+                    web-mode-hook))
+      (add-hook hook 'linum-on)))
+
 (provide 'init-linum)
 ;;; init-linum.el ends here
