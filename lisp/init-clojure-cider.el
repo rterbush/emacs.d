@@ -29,11 +29,5 @@
     (after-load 'flycheck
       (flycheck-clojure-setup))))
 
-(require-package 'flycheck-clojure)
-(after-load 'flycheck
-  (flycheck-clojure-setup))
-(eval-after-load 'flycheck
-  '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-
 (provide 'init-clojure-cider)
 ;;; init-clojure-cider.el ends here

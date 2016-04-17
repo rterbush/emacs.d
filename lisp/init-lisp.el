@@ -194,8 +194,8 @@
 (dolist (hook (mapcar #'derived-mode-hook-name sanityinc/lispy-modes))
   (add-hook hook 'sanityinc/lisp-setup))
 
-;;(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
-;;  (add-hook hook 'sanityinc/emacs-lisp-setup))
+(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
+ (add-hook hook 'sanityinc/emacs-lisp-setup))
 
 (if (boundp 'eval-expression-minibuffer-setup-hook)
     (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)

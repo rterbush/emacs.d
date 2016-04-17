@@ -120,7 +120,7 @@
 (require 'init-haml)
 (require 'init-python-mode)
 (require 'init-ein)
-;;(require 'init-powershell-mode)
+(require 'init-powershell-mode)
 (require 'init-projectile)
 (require 'init-haskell)
 (require 'init-elm)
@@ -132,11 +132,12 @@
 
 (require 'init-paredit)
 (require 'init-lisp)
+(require 'init-slime)
 (unless (version<= emacs-version "24.2")
   (require 'init-clojure)
   (require 'init-clojure-cider))
 (require 'init-common-lisp)
-;;(require 'init-scala)
+(require 'init-scala)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
