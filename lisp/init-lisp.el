@@ -1,11 +1,15 @@
+;;; package --- Summary:
+;;; Commentary:
+;;; Code:
 (require-package 'elisp-slime-nav)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'elisp-slime-nav-mode))
+  (add-hook hook 'turn-on-elisp-slime-nav-mode))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "ELisp")))
 
 (require-package 'lively)
 
 (setq-default initial-scratch-message
-              (concat ";; Happy hacking " (or user-login-name "") "!\n\n"))
+              (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
 
 
 
@@ -27,12 +31,22 @@
 (ipretty-mode 1)
 
 
-(defadvice pp-display-expression (after make-read-only (expression out-buffer-name) activate)
+(defadvice pp-display-expression (after sanityinc/make-read-only (expression out-buffer-name) activate)
   "Enable `view-mode' in the output buffer - if any - so it can be closed with `\"q\"."
   (when (get-buffer out-buffer-name)
     (with-current-buffer out-buffer-name
       (view-mode 1))))
 
+
+
+(defun sanityinc/maybe-set-bundled-elisp-readonly ()
+  "If this elisp appears to be part of Emacs, then disallow editing."
+  (when (and (buffer-file-name)
+             (string-match-p "\\.el\\.gz\\'" (buffer-file-name)))
+    (setq buffer-read-only t)
+    (view-mode 1)))
+
+(add-hook 'emacs-lisp-mode-hook 'sanityinc/maybe-set-bundled-elisp-readonly)
 
 
 ;; Use C-c C-z to toggle between elisp files and an ielm session
@@ -68,27 +82,6 @@
 ;; Hippie-expand
 ;; ----------------------------------------------------------------------------
 
-(defun my/emacs-lisp-module-name ()
-  "Search the buffer for `provide' declaration."
-  (save-excursion
-    (goto-char (point-min))
-    (when (search-forward-regexp "^(provide '" nil t)
-      (symbol-name (symbol-at-point)))))
-
-;; Credit to Chris Done for this one.
-(defun my/try-complete-lisp-symbol-without-namespace (old)
-  "Hippie expand \"try\" function which expands \"-foo\" to \"modname-foo\" in elisp."
-  (unless old
-    (he-init-string (he-lisp-symbol-beg) (point))
-    (when (string-prefix-p "-" he-search-string)
-      (let ((mod-name (my/emacs-lisp-module-name)))
-        (when mod-name
-          (setq he-expand-list (list (concat mod-name he-search-string)))))))
-  (when he-expand-list
-    (he-substitute-string (car he-expand-list))
-    (setq he-expand-list nil)
-    t))
-
 (defun set-up-hippie-expand-for-elisp ()
   "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
   (make-local-variable 'hippie-expand-try-functions-list)
@@ -100,10 +93,14 @@
 ;; ----------------------------------------------------------------------------
 ;; Automatic byte compilation
 ;; ----------------------------------------------------------------------------
+(when (maybe-require-package 'auto-compile)
+  (auto-compile-on-save-mode 1)
+  (auto-compile-on-load-mode 1))
 
-(require-package 'auto-compile)
-(auto-compile-on-save-mode 1)
-(auto-compile-on-load-mode 1)
+;; ----------------------------------------------------------------------------
+;; Load .el if newer than corresponding .elc
+;; ----------------------------------------------------------------------------
+(setq load-prefer-newer t)
 
 ;; ----------------------------------------------------------------------------
 ;; Load .el if newer than corresponding .elc
@@ -148,20 +145,40 @@
 (after-load 'redshank
   (diminish 'redshank-mode))
 
-(maybe-require-package 'aggressive-indent)
+(defun sanityinc/enable-check-parens-on-save ()
+  "Run `check-parens' when the current buffer is saved."
+  (add-hook 'after-save-hook #'check-parens nil t))
+
+(defvar sanityinc/lispy-modes-hook
+  '(rainbow-delimiters-mode
+    enable-paredit-mode
+    turn-on-eldoc-mode
+    redshank-mode
+    sanityinc/enable-check-parens-on-save)
+  "Hook run in all Lisp modes.")
+
+
+(when (maybe-require-package 'aggressive-indent)
+  (add-to-list 'sanityinc/lispy-modes-hook 'aggressive-indent-mode))
+
+(when (maybe-require-package 'adjust-parens)
+  (defun sanityinc/adjust-parens-setup ()
+    (when (fboundp 'lisp-indent-adjust-parens)
+      (set (make-local-variable 'adjust-parens-fallback-dedent-function) 'ignore)
+      (set (make-local-variable 'adjust-parens-fallback-indent-function) 'ignore)
+      (local-set-key (kbd "<M-left>") 'lisp-dedent-adjust-parens)
+      (local-set-key (kbd "<M-right>") 'lisp-indent-adjust-parens)))
+
+  (add-to-list 'sanityinc/lispy-modes-hook 'sanityinc/adjust-parens-setup))
 
 (defun sanityinc/lisp-setup ()
   "Enable features useful in any Lisp mode."
-  (rainbow-delimiters-mode t)
-  (enable-paredit-mode)
-  (when (fboundp 'aggressive-indent-mode)
-    (aggressive-indent-mode))
-  (turn-on-eldoc-mode)
-  (eldoc-add-command
-  'paredit-backward-delete
-  'paredit-close-round)
-  (redshank-mode)
-  (add-hook 'after-save-hook #'check-parens nil t))
+  (run-hooks 'sanityinc/lispy-modes-hook))
+
+(defun sanityinc/emacs-lisp-setup ()
+  "Enable features useful when working with elisp."
+  (set-up-hippie-expand-for-elisp)
+  (ac-emacs-lisp-mode-setup))
 
 (defconst sanityinc/elispy-modes
   '(emacs-lisp-mode ielm-mode)
@@ -291,3 +308,4 @@
 
 
 (provide 'init-lisp)
+;;; init-lisp.el ends here

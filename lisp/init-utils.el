@@ -1,6 +1,7 @@
 ;;; package -- init-utils.el
 ;;; Commentary:
 ;;; Code:
+
 (if (fboundp 'with-eval-after-load)
     (defalias 'after-load 'with-eval-after-load)
   (defmacro after-load (feature &rest body)
@@ -84,7 +85,8 @@
   "Open the current file as a URL using `browse-url'."
   (interactive)
   (let ((file-name (buffer-file-name)))
-    (if (tramp-tramp-file-p file-name)
+    (if (and (fboundp 'tramp-tramp-file-p)
+             (tramp-tramp-file-p file-name))
         (error "Cannot open tramp file")
       (browse-url (concat "file://" file-name)))))
 

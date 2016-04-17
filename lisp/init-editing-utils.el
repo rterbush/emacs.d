@@ -23,11 +23,9 @@
  save-interprogram-paste-before-kill t
  scroll-preserve-screen-position 'always
  set-mark-command-repeat-pop t
- show-trailing-whitespace t
  tooltip-delay 1.5
  truncate-lines nil
- truncate-partial-width-windows nil
- visible-bell t)
+ truncate-partial-width-windows nil)
 
 (global-auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
@@ -35,31 +33,6 @@
 
 (transient-mark-mode t)
 
-
-;;; Whitespace
-
-(defun sanityinc/no-trailing-whitespace ()
-  "Turn off display of trailing whitespace in this buffer."
-  (setq show-trailing-whitespace nil))
-
-;; But don't show trailing whitespace in SQLi, inf-ruby etc.
-(dolist (hook '(special-mode-hook
-                Info-mode-hook
-                eww-mode-hook
-                term-mode-hook
-                comint-mode-hook
-                compilation-mode-hook
-                twittering-mode-hook
-                minibuffer-setup-hook))
-  (add-hook hook #'sanityinc/no-trailing-whitespace))
-
-
-(require-package 'whitespace-cleanup-mode)
-(global-whitespace-cleanup-mode t)
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 
 ;;; Newline behaviour
@@ -95,11 +68,14 @@
 (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
   (add-hook hook 'highlight-symbol-mode)
   (add-hook hook 'highlight-symbol-nav-mode))
+(add-hook 'org-mode-hook 'highlight-symbol-nav-mode)
 (after-load 'highlight-symbol
   (diminish 'highlight-symbol-mode)
   (defadvice highlight-symbol-temp-highlight (around sanityinc/maybe-suppress activate)
     "Suppress symbol highlighting while isearching."
-    (unless isearch-mode ad-do-it)))
+    (unless (or isearch-mode
+                (and (boundp 'multiple-cursors-mode) multiple-cursors-mode))
+      ad-do-it)))
 
 ;;----------------------------------------------------------------------------
 ;; Zap *up* to char is a handy pair for zap-to-char
@@ -111,6 +87,11 @@
 
 (require-package 'browse-kill-ring)
 (setq browse-kill-ring-separator "\f")
+(global-set-key (kbd "M-Y") 'browse-kill-ring)
+(after-load 'browse-kill-ring
+  (define-key browse-kill-ring-mode-map (kbd "C-g") 'browse-kill-ring-quit)
+  (define-key browse-kill-ring-mode-map (kbd "M-n") 'browse-kill-ring-forward)
+  (define-key browse-kill-ring-mode-map (kbd "M-p") 'browse-kill-ring-previous))
 (after-load 'page-break-lines
   (push 'browse-kill-ring-mode page-break-lines-modes))
 
@@ -160,10 +141,9 @@
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
-(require-package 'ace-jump-mode)
-(global-set-key (kbd "C-;") 'ace-jump-mode)
-(global-set-key (kbd "C-:") 'ace-jump-word-mode)
-
+(when (maybe-require-package 'avy)
+  (autoload 'avy-goto-word-or-subword-1 "avy")
+  (global-set-key (kbd "C-;") 'avy-goto-word-or-subword-1))
 
 (require-package 'multiple-cursors)
 ;; multiple-cursors
@@ -200,44 +180,6 @@
 (require-package 'page-break-lines)
 (global-page-break-lines-mode)
 (diminish 'page-break-lines-mode)
-
-;;----------------------------------------------------------------------------
-;; Fill column indicator
-;;----------------------------------------------------------------------------
-(when (eval-when-compile (> emacs-major-version 23))
-  (require-package 'fill-column-indicator)
-  (defun sanityinc/prog-mode-fci-settings ()
-    (turn-on-fci-mode)
-    (when show-trailing-whitespace
-      (set (make-local-variable 'whitespace-style) '(face trailing))
-      (whitespace-mode 1)))
-
-  ;;(add-hook 'prog-mode-hook 'sanityinc/prog-mode-fci-settings)
-
-  (defun sanityinc/fci-enabled-p ()
-    (and (boundp 'fci-mode) fci-mode))
-
-  (defvar sanityinc/fci-mode-suppressed nil)
-  (defadvice popup-create (before suppress-fci-mode activate)
-    "Suspend fci-mode while popups are visible"
-    (let ((fci-enabled (sanityinc/fci-enabled-p)))
-      (when fci-enabled
-        (set (make-local-variable 'sanityinc/fci-mode-suppressed) fci-enabled)
-        (turn-off-fci-mode))))
-  (defadvice popup-delete (after restore-fci-mode activate)
-    "Restore fci-mode when all popups have closed"
-    (when (and sanityinc/fci-mode-suppressed
-               (null popup-instances))
-      (setq sanityinc/fci-mode-suppressed nil)
-      (turn-on-fci-mode)))
-
-  ;; Regenerate fci-mode line images after switching themes
-  (defadvice enable-theme (after recompute-fci-face activate)
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (sanityinc/fci-enabled-p)
-          (turn-on-fci-mode))))))
-
 
 ;;----------------------------------------------------------------------------
 ;; Shift lines up and down with M-up and M-down. When paredit is enabled,
@@ -304,10 +246,10 @@ on the new line if the line would have been blank.
 With arg N, insert N newlines."
   (interactive "*p")
   (let* ((do-fill-prefix (and fill-prefix (bolp)))
-	 (do-left-margin (and (bolp) (> (current-left-margin) 0)))
-	 (loc (point-marker))
-	 ;; Don't expand an abbrev before point.
-	 (abbrev-mode nil))
+         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
+         (loc (point-marker))
+         ;; Don't expand an abbrev before point.
+         (abbrev-mode nil))
     (delete-horizontal-space t)
     (newline n)
     (indent-according-to-mode)
@@ -316,8 +258,8 @@ With arg N, insert N newlines."
     (goto-char loc)
     (while (> n 0)
       (cond ((bolp)
-	     (if do-left-margin (indent-to (current-left-margin)))
-	     (if do-fill-prefix (insert-and-inherit fill-prefix))))
+             (if do-left-margin (indent-to (current-left-margin)))
+             (if do-fill-prefix (insert-and-inherit fill-prefix))))
       (forward-line 1)
       (setq n (1- n)))
     (goto-char loc)
@@ -350,7 +292,7 @@ With arg N, insert N newlines."
 
 
 (require-package 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r"))
+(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r"))
 (guide-key-mode 1)
 (diminish 'guide-key-mode)
 

@@ -5,6 +5,7 @@ recentf
 /.emacs.desktop
 /auto-save-list
 /.session
+/session.*
 /custom.el
 *.elc
 CVS
@@ -38,5 +39,8 @@ site-lisp/package/
 /eshell
 /.cask/
 /.sx/
-/lisp/.Rhistory
-/projectile-bookmarks.eld
+/org-clock-save.el
+/ditaa*.jar
+/ido.last
+/recentf
+/viper
