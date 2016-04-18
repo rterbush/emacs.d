@@ -66,6 +66,7 @@
 (depends-on "diff-hl")
 (depends-on "diminish")
 (depends-on "dired+")
+(depends-on "dired-sort")
 (depends-on "dsvn")
 (depends-on "ein")
 (depends-on "ein-mumamo")
