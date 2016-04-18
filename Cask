@@ -229,6 +229,7 @@
 (depends-on "simple-httpd")
 (depends-on "skewer-less")
 (depends-on "skewer-mode")
+(depends-on "slamhound")
 (depends-on "slime")
 (depends-on "smartparens")
 (depends-on "smarty-mode")
