@@ -61,7 +61,7 @@
                     javascript-mode-hook
                     scala-mode-hook
                     web-mode-hook))
-      (add-hook hook 'linum-on)))
+      (add-hook hook 'linum-mode)))
 
 (provide 'init-linum)
 ;;; init-linum.el ends here
