@@ -2,6 +2,18 @@
 ;;; Commentary:
 (require 'init-clojure)
 ;;; Code:
+(defun cider-figwheel-repl ()
+  (interactive)
+  (save-some-buffers)
+  (with-current-buffer (cider-current-repl-buffer)
+    (goto-char (point-max))
+    (insert "(require 'figwheel-sidecar.repl-api)
+             (figwheel-sidecar.repl-api/start-figwheel!)
+             (figwheel-sidecar.repl-api/cljs-repl)")
+    (cider-repl-return)))
+
+(global-set-key (kbd "C-c C-r") 'cider-figwheel-repl)
+
 (when (maybe-require-package 'cider)
   (require-package 'ac-cider)
 

@@ -10,5 +10,7 @@
 (when (memq window-system '(mac))
   (exec-path-from-shell-initialize))
 
+(exec-path-from-shell-initialize)
+
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here
