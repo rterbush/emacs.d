@@ -31,7 +31,7 @@
 
 (setq debug-on-error t)
 
-(defvar powershell-indent 8
+(defvar powershell-indent 4
   "Amount of horizontal space to indent after, for instance, an
 opening brace")
 
@@ -60,36 +60,36 @@ previous line is a continued line, ending with a backtick or a pipe"
     ;; to the continued line; otherwise, we indent relative to the ([{ that
     ;; opened the current block.
     (if (powershell-continuation-line-p)
-	(progn
-	  (while (powershell-continuation-line-p)
-	    (forward-line -1))
-	  (+ (current-indentation) powershell-continuation-indent))
+        (progn
+          (while (powershell-continuation-line-p)
+            (forward-line -1))
+          (+ (current-indentation) powershell-continuation-indent))
       (condition-case nil
-	  (progn
-	    (backward-up-list)
-	    ;; indentation relative to the opening paren: if there is text (no
-	    ;; comment) after the opening paren, vertically align the block
-	    ;; with this text; if we were looking at the closing paren, reset
-	    ;; the indentation; otherwise, indent the block by powershell-indent.
-	    (cond ((not (looking-at ".[\t ]*\\(#.*\\)?$"))
-		   (forward-char)
-		   (skip-chars-forward " \t")
-		   (current-column))
-		  (closing-paren
-		   (current-indentation))
-		  (t
-		   (+ (current-indentation) powershell-indent))))
-	(scan-error ;; most likely, we are at the top-level
-	 0)))))
+          (progn
+            (backward-up-list)
+            ;; indentation relative to the opening paren: if there is text (no
+            ;; comment) after the opening paren, vertically align the block
+            ;; with this text; if we were looking at the closing paren, reset
+            ;; the indentation; otherwise, indent the block by powershell-indent.
+            (cond ((not (looking-at ".[\t ]*\\(#.*\\)?$"))
+                   (forward-char)
+                   (skip-chars-forward " \t")
+                   (current-column))
+                  (closing-paren
+                   (current-indentation))
+                  (t
+                   (+ (current-indentation) powershell-indent))))
+        (scan-error ;; most likely, we are at the top-level
+         0)))))
 
 (defun powershell-indent-line ()
   "Indent the current line of powershell mode, leaving the point
 in place if it is inside the meat of the line"
   (interactive)
   (let ((savep (> (current-column) (current-indentation)))
-	(amount (save-excursion (powershell-indent-line-amount))))
+        (amount (save-excursion (powershell-indent-line-amount))))
     (if savep
-	(save-excursion (indent-line-to amount))
+        (save-excursion (indent-line-to amount))
       (indent-line-to amount))))
 
 
@@ -100,20 +100,20 @@ in place if it is inside the meat of the line"
 
 (defvar powershell-keywords
   (regexp-opt '("begin" "break" "catch" "continue" "data" "do" "dynamicparam"
-		"else" "elseif" "end" "exit" "filter" "finally" "for" "foreach"
-		"from" "function" "if" "in" "param" "process" "return"
-		"switch" "throw" "trap" "try" "until" "while"))
+                "else" "elseif" "end" "exit" "filter" "finally" "for" "foreach"
+                "from" "function" "if" "in" "param" "process" "return"
+                "switch" "throw" "trap" "try" "until" "while"))
   "Powershell keywords")
 
 (defvar powershell-operators
   (regexp-opt '("and" "as" "band" "bnot" "bor" "bxor" "casesensitive"
-		"ccontains" "ceq" "cge" "cgt" "cle" "clike" "clt" "cmatch"
-		"cne" "cnotcontains" "cnotlike" "cnotmatch" "contains"
-		"creplace" "eq" "exact" "f" "file" "ge" "gt" "icontains"
-		"ieq" "ige" "igt" "ile" "ilike" "ilt" "imatch" "ine"
-		"inotcontains" "inotlike" "inotmatch" "ireplace" "is"
-		"isnot" "le" "like" "lt" "match" "ne" "not" "notcontains"
-		"notlike" "notmatch" "or" "replace" "wildcard"))
+                "ccontains" "ceq" "cge" "cgt" "cle" "clike" "clt" "cmatch"
+                "cne" "cnotcontains" "cnotlike" "cnotmatch" "contains"
+                "creplace" "eq" "exact" "f" "file" "ge" "gt" "icontains"
+                "ieq" "ige" "igt" "ile" "ilike" "ilt" "imatch" "ine"
+                "inotcontains" "inotlike" "inotmatch" "ireplace" "is"
+                "isnot" "le" "like" "lt" "match" "ne" "not" "notcontains"
+                "notlike" "notmatch" "or" "replace" "wildcard"))
   "Powershell operators")
 
 (defvar powershell-scope-names
@@ -166,7 +166,7 @@ differently from the other variables.")
      ("\\${\\([^}]+\\)}" 1 font-lock-variable-name-face)
      ;; Variables, with a scope
      (,(concat "\\$\\(" powershell-scope-names "\\):"
-	       "\\([[:alnum:]_]+\\)")
+               "\\([[:alnum:]_]+\\)")
       (1 (cons font-lock-type-face '(underline)))
       (2 font-lock-variable-name-face))
      ;; Variables, without a scope. XXX: unify this with the
@@ -192,7 +192,7 @@ differently from the other variables.")
 (defvar powershell-imenu-expression
   `(("Functions" "function \\(\\w+\\)" 1)
     ("Top variables" ,(concat "^\\$\\(" powershell-scope-names "\\)?:?"
-			      "\\([[:alnum:]_]+\\)")
+                              "\\([[:alnum:]_]+\\)")
      2))
   "List of regexps matching important expressions, for speebar & imenu.")
 
@@ -212,7 +212,7 @@ differently from the other variables.")
 ;; the default in this mode, we will not capture the column number.
 (setq compilation-error-regexp-alist
       (cons '("At \\(.*\\):\\([0-9]+\\) char:\\([0-9]+\\)" 1 2)
-	    compilation-error-regexp-alist))
+            compilation-error-regexp-alist))
 
 
 ;; the hook is automatically run by derived-mode
@@ -224,9 +224,9 @@ differently from the other variables.")
   (set (make-local-variable 'indent-line-function) 'powershell-indent-line)
   (set (make-local-variable 'font-lock-defaults)
        '((powershell-font-lock-keywords-1
-	  powershell-font-lock-keywords-2
-	  powershell-font-lock-keywords-3)
-	 nil t))
+          powershell-font-lock-keywords-2
+          powershell-font-lock-keywords-3)
+         nil t))
   (set (make-local-variable 'comment-start) "# ")
   (set (make-local-variable 'comment-start-skip) "#+\\s*")
   ;; not sure why this is not the default
