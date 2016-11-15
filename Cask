@@ -130,6 +130,7 @@
 (depends-on "hippie-expand-slime")
 (depends-on "hl-sexp")
 (depends-on "hlinum")
+(depends-on "ht")
 (depends-on "htmlize")
 (depends-on "hydra")
 (depends-on "ibuffer-git")
