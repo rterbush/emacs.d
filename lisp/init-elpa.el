@@ -37,12 +37,12 @@
 ;; If gpg cannot be found, signature checking will fail, so we
 ;; conditionally enable it according to whether gpg is available. We
 ;; re-run this check once $PATH has been configured
-(defun sanityinc/package-maybe-enable-signatures ()
-  (setq package-check-signature (when (executable-find "gpg") 'allow-unsigned)))
-
-(sanityinc/package-maybe-enable-signatures)
-(after-load 'init-exec-path
-  (sanityinc/package-maybe-enable-signatures))
+;(defun sanityinc/package-maybe-enable-signatures ()
+;  (setq package-check-signature (when (executable-find "gpg") 'allow-unsigned)))
+;
+;(sanityinc/package-maybe-enable-signatures)
+;(after-load 'init-exec-path
+;  (sanityinc/package-maybe-enable-signatures))
 
 
 

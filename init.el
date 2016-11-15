@@ -23,7 +23,7 @@
 ;; Package Management
 ;;----------------------------------------------------------------------------
 
-(require 'cask "~/.emacs.d/.cask/24.5.1/elpa/cask-20151123.528/cask.el")
+(require 'cask "~/.emacs.d/.cask/25.1.1/elpa/cask-20161003.1152/cask.el")
 (cask-initialize)
 
 (require 'pallet)
@@ -53,7 +53,7 @@
 (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
 ;; Calls (package-initialize)
 (require 'init-elpa)      ;; Machinery for installing required packages
-(require 'init-exec-path) ;; Set up $PATH
+;(require 'init-exec-path) ;; Set up $PATH
 
 ;;----------------------------------------------------------------------------
 ;; Allow users to provide an optional "init-preload-local.el"
